@@ -1,0 +1,91 @@
+#ifndef GROCERYLIST_H
+2  #define GROCERYLIST_H
+3
+4  #include "globals.h"
+5
+6  /*******************************************************************************
+7   *
+8   *  File name:  GroceryList.h
+9   *
+10  *  The "GroceryList" class represents a list of item and quantity for
+11  *  ingredients that need to be purchased.
+12  *
+13  *  PUBLIC METHOD SPECIFICATION:
+14  *
+15  *    contains:
+16  *       Input:   the name of an item
+17  *       Action:  the list will be searched for this item and if found true will
+18  *                be returned; otherwise false will be returned.
+19  *       Assumptions:  the input argument is a valid c-string
+20  *
+21  *       NOTES:
+22  *       1. this operation must be called prior to any of the other member functions
+23  *
+24  *    getQuantity:
+25  *       Input:   the name of an item
+26  *       Action:  the quantity of this item on the GroceryList will be returned
+27  *       Assumptions:  this method should only be called if the item is on the list.
+28  *                     If the item is not on the list the value returned is undefined.
+29  *
+30  *    updateQuantity:
+31  *       Input:   the name of the item and an integer value of the quantity
+32  *       Action:  the integer value can be positive or negative, and the method updates
+33  *                the quantity accordingly. If the item is not on the list the method has
+34  *                no effect
+35  *
+36  *    insertItem:
+37  *       Input:   a name and a integer quantity
+38  *       Action:  adds the name and quantity to the GroceryList maintaining the lists
+39  *                sorted order.
+40  *                Inserting a name already existing on the list will result in
+41  *                two versions of this name/quantity on the GroceryList.
+42  *       Assumptions:
+43  *       1. the name is a valid c-string
+44  *       2. the quantity is a positive integer value
+45  *
+46  *    removeItem:
+47  *       Input:   a name
+48  *       Action:  removes the given name / quantity item from the GroceryList
+49  *                maintaining the lists sorted order.
+50  *                The function returns true if the item is removed from the list;
+51  *                otherwise it returns false.
+*       Assumptions:
+53  *       1. the name is a valid c-string
+54  *
+55  *    write:
+56  *       Input:   an ostream
+57  *       Action:  displays the entire GroceryList to the specified stream in the
+58  *                format quantity name, with a single space between the quantity
+59  *                and name
+60  *       Assumptions:  the ostream is valid and open
+61  *
+62  ******************************************************************************/
+63
+64 class GroceryList
+65 {
+66 public:
+67     GroceryList();
+68     ~GroceryList();
+69     bool contains (const NAME aName);
+70     int getQuantity (const NAME aName) const;
+71     void updateQuantity (const NAME aName, int quantity) const;
+72     void insertItem(const NAME aName, int quantity);
+73     bool removeItem(const NAME aName) const;
+74     void write(ostream &out) const;
+75
+76 private:
+77     struct GroceryNode
+    {
+79         GroceryNode *next;
+80         GroceryNode *prev;
+81         int quantity;
+82         NAME name;                   // NAME type declared in global.h
+83     };
+84     typedef GroceryNode *GroceryPtr;
+85
+86     void search (const NAME aName, GroceryPtr &here, bool &found) const;
+87     GroceryNode head, tail;
+88 };
+89
+90
+91 #endif

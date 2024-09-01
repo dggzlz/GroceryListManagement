@@ -1,0 +1,12 @@
+#ifndef GLOBAL_H
+2  #define GLOBAL_H
+3
+4  #include <iostream>
+5  #include <cstring>
+6  #include <fstream>
+7  using namespace std;
+8
+9  const int MAX_ITEM_NAME_LEN = 50;
+10 typedef char NAME[MAX_ITEM_NAME_LEN+1];
+11
+12 #endif
